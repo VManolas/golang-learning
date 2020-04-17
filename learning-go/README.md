@@ -27,6 +27,19 @@ If you are also starting off, you may find these resources useful.
 - Packages 
   - when you name a package, via the **package** keyword, you provide a single value, not a complete hierarchy (e.g. "shopping" or "db")
   - when you import a package, you specify the complete path
+  - Package Management: `go get`
+    - `go get` **within a project**, it’ll scan all the files, looking for imports to third-party libraries and will download them. In a way, **our own source code becomes a Gemfile or package.json.**
+    - `go get -u` updates the packages (`go get -u FULL_PACKAGE_NAME` updates a specific package)
+    - There is no way to specify a revision, it always points to the `master/head/trunk/default`. This is an even larger problem if you have two projects needing different versions of the same library. To solve this you can use a [3rd-party dependency management tool](https://github.com/golang/go/wiki/PackageManagementTools) (e.g. `goop`, `godep`)
+- Interfaces
+  - define **a contract** but **not an implementation**
+  - (what purpose?) help **decouple code from specific implementations**. (How?) We might have various types of loggers, yet by programming against the interface, rather than these concrete implementations, we can easily change (and test) which we use without any impact to our code.
+  - In a language like C# or Java, we have to be **explicit** when a class implements an interface. In Go, this happens **implicitly**. This cuts down on the verboseness of using interfaces, and also ends to promote small and focused interfaces. 
+  - The standard library is full of interfaces. The `io` package has a handful of popular ones such as `io.Reader`,`io.Writer`, and `io.Closer`. If you write a function that expects a parameter that you’ll only be calling `Close()` on, you absolutely should accept an `io.Closer` rather than whatever concrete type you’re using.
+  - Interfaces can also participate in **composition**. And, interfaces themselves can be composed of other interfaces. For example, `io.ReadCloser` is an interface **composed** of the `io.Reader` interface as well as the `io.Closer` interface.
+  - Interfaces are commonly used to **avoid cyclical imports**. Since they don’t have implementations, they’ll have **limited dependencies**.
+- Tidbits
+  - Error handling
 
 ### Examples
 - Example 1 Hello World
@@ -47,6 +60,8 @@ If you are also starting off, you may find these resources useful.
 - Example 10 Maps
 - Example 11 Packages
   - See directory `../shopping`
+- Example 12 Interfaces
+- Example 13 Error Handling (Tidbits)
 
 ### Questions
 - What are the ENV variables in ~/.profile ?
@@ -62,4 +77,6 @@ If you are also starting off, you may find these resources useful.
 - What is the factory pattern (example 6)? And How it shields the rest of the code from worrying about allocation details?
 - See ?? in Example7/main.go
 - Example 9h - func extractPowers
-- 
+- Which tool do you use for package-management
+- Remember: the tight relationship between package names and your directory structure (not just within a project, but within the entire workspace). What is the difference between the workspace and the project?
+- How to handle the dependency `github.com/mattn/go-sqlite3`
