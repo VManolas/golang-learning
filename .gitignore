@@ -1,0 +1,11 @@
+# OS generated files #
+######################
+.DS_Store
+
+# IDEs
+.vscode
+*.code-workspace
+*.sublime-*
+.idea
+.editorconfig
+github.com/
