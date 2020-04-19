@@ -1,8 +1,7 @@
 package db
 
 import (
-	"shopping/models",
-	"github.com/mattn/go-sqlite3"
+	"shopping/models"
 )
 
 func LoadItem(id int) *models.Item {

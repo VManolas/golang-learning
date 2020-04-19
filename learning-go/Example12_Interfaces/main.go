@@ -24,5 +24,3 @@ func process(logger Logger) {
 func main() {
 
 }
-
-// See directory ../shopping

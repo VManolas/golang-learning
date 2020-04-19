@@ -40,6 +40,61 @@ If you are also starting off, you may find these resources useful.
   - Interfaces are commonly used to **avoid cyclical imports**. Since they don’t have implementations, they’ll have **limited dependencies**.
 - Tidbits
   - Error handling
+    - Go’s preferred way to deal with errors is through **return values**, **not exceptions**. 
+    - You can create your own error type; the only requirement is that it fulfills the contract of the built-in `error` interface, which is 
+    ```
+    type error interface {
+      Error() string
+    }
+    ```
+    - There is a common pattern in Go's standard library of using error variables. For example, the `io` package has an `EOF` variable which is defined as: 
+    ```
+    var EOF = errors.New("EOF")
+    ```
+    - This is a package variable (it's defined outside of a function) which is publicly accessible (upper-case first letter). Various functions can return this error, say when we're reading from a file or STDIN. If it makes contextual sense, you should use this error, too.
+    - Go does have `panic` and `recover` functions. `panic` is like throwing an exception while `recover` is like `catch`; they are rarely used. 
+  - Defer
+    - Even though Go has a garbage collector, **some resources require that we explicitly release them**. For example, we need to `Close()` **files** after we’re done with them. This sort of code is always dangerous. For one thing, as we’re writing a function, it’s easy to forget to Close something that we declared 10 lines up. For another, a function might have multiple return points. Go’s solution is the `defer` keyword.
+    - Whatever you defer will be **executed after the enclosing function returns**, even if it does so violently. This lets you release resources near where it’s initialized and takes care of multiple return points.
+  - `go fmt`
+    - When you’re inside a project, you can apply the formatting rule to it and all sub-projects via: `go fmt ./...`
+  - Initialized if
+    - a value can be initiated prior to the condition being evaluated. While the values aren’t available outside the if-statement, they are available inside any `elseif` or `else` 
+    ```
+    if err := process(); err!=nil {
+      return err
+    }
+    ```
+  - Empty Interfaces and Conversions
+    - In most object-oriented languages, a built-in base class, often named `object`, is the **superclass** for all other classes. Go, *having no inheritance, doesn’t have such a superclass*. What it does have is **an empty interface with no methods**: `interface{}`. Since every type implements all 0 of the empty interface’s methods, and since interfaces are implicitly implemented, every type fulfills the contract of the empty interface.
+    - If we wanted, we could write an `add` function with the following signature:
+    ```
+    func add(a interface{}, b interface{}) interface{} { ... }
+    ```
+    - To convert an interface variable to an explicit type, you use `.(TYPE)`:
+    ```
+    return a.(int) + b.(int) 
+    // if the underlying type is not `int`, the above will result in an error
+    ```
+    - A powerful **type switch**:
+    ```
+    switch a.(type) {
+      case int:
+        fmt.Printf("a is now an int and equals %d\n", a)
+      case bool,string: 
+        //...
+      default:
+        //...
+    }
+    ```
+    - *You’ll see and probably use the empty interface more than you might first expect. Admittedly, it won’t result in clean code. Converting values back and forth is ugly and dangerous but sometimes, in a static language, it’s the only choice*.
+  - Strings and Byte Arrays
+    - when you use `[]byte(X)` or `string(X)`, you’re creating a copy of the data. This is necessary because **strings are immutable**.
+    - Strings are made of `runes` which are *unicode code points*. If you take the length of a string, you might not get what you expect.
+    - If you iterate over a string using `range`, you’ll get `runes`, not bytes. Of course, when you turn a string into a `[]byte` you’ll get the correct data.
+  - Function Type
+    - Functions are 1st class types (`type Add func (a int, b int) int`) which can be used anywhere - as a field type, a parameter, a return value.
+- Concurrency
 
 ### Examples
 - Example 1 Hello World
@@ -62,6 +117,9 @@ If you are also starting off, you may find these resources useful.
   - See directory `../shopping`
 - Example 12 Interfaces
 - Example 13 Error Handling (Tidbits)
+- Example 14 Defer (Tidbits)
+- Example 15 Strings and Byte Arrays (Tidbits)
+- Example 16 Function Type (Tidbits)
 
 ### Questions
 - What are the ENV variables in ~/.profile ?
@@ -80,3 +138,9 @@ If you are also starting off, you may find these resources useful.
 - Which tool do you use for package-management
 - Remember: the tight relationship between package names and your directory structure (not just within a project, but within the entire workspace). What is the difference between the workspace and the project?
 - How to handle the dependency `github.com/mattn/go-sqlite3`
+- What is a singleton? (see Example 13b) How to run Example 13b?
+- Example 14a didn't return the error :/ 
+- `go fmt ./...` --> can't load package: package learning-go: no Go files in /Users/vasileiosmanolas/go/src/learning-go (?)
+- This is necessary because strings are **immutable**? Do not change? Example15
+- If you iterate over a string using `range`, you’ll get `runes`, not bytes (?)
+- Example 16 - Using functions like this can help decouple code from specific implementations much like we achieve with interfaces. - ??
