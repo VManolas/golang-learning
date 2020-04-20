@@ -95,6 +95,52 @@ If you are also starting off, you may find these resources useful.
   - Function Type
     - Functions are 1st class types (`type Add func (a int, b int) int`) which can be used anywhere - as a field type, a parameter, a return value.
 - Concurrency
+  - **Concurrent programming** demands considerably more attention and care. **Goroutines** effectively **abstract** what’s needed to run concurrent code. **Channels** help eliminate some serious bugs that can happen when data is shared by **eliminating the sharing of data**. This doesn’t just eliminate bugs, but it changes how one approaches concurrent programming. You start to **think about concurrency with respect to message passing**,rather than dangerous areas of code.Having said that, I still make extensive use of the various **synchronization primitives** found in the `sync` and `sync/atomic` **packages**. I think it’s important to be comfortable with both. I encourage you to **first focus on channels**, but when you see a simple example that needs a **short-lived lock**, consider using a `mutex` or `read-write mutex`.
+  - Goroutines: similar to a thread, but it is scheduled by Go, not the OS. Code that runs in a goroutine can run concurrently with other code.
+    - How we start a goroutine: using the `go` keyword followed by the function we want to execute. 
+    - Multiple goroutines will end up running on the same underlying OS thread. This is often called an `M:N threading model` because we have M application threads (goroutines) running on N OS threads. The result is that a goroutine has a fraction of overhead (a few KB) than OS threads.
+    - On modern hardware, it's possible to have millions of goroutines.
+    - The complexity of mapping and scheduling is hidden. We just say this code should run concurrently and let Go worry about making it happen.
+  - Synchronization
+    - Concurrent code needs to be coordinated. 
+    - Writing concurrent code requires that you pay specific attention to where and how you read and write values. In some ways, it's like programming without a garbage collector.
+    - **The only concurrent thing you can safely do to a variable is to read from it. You can have as many readers as you want,but writes need to be synchronized.** 
+      - There are various ways to do this, including using some truly atomic operations that rely on special CPU instructions. However, the most common approach is to use a `mutex`. A mutex serializes access to the code under lock.
+    - There's a whole class of serious **bugs** that can arise when doing concurrent programming:
+      1. It isn't always so obvious **what code needs to be protected**. While it might be tempting to use `coarse locks` (locks that cover a large amount of code), that undermines the very reason we’re doing concurrent programming in the first place. We generally want `fine locks`; else, we end up with a ten-lane highway thatsuddenly turns into a one-lane road.
+      2. The other problem has to do with **deadlocks**. With a single lock, this isn’t a problem, but if you’re using two or morelocks around the same code, *it’s dangerously easy to have situations where goroutineA holds lockA but needs access to lockB, while goroutineB holds lockB but needs access to lockA*. It actually is possible to *deadlock with a single lock, if we forget to release it*. This isn’t as dangerous as a multi-lockdeadlock because those are really tough to spot.
+    - There’s another common `mutex` called a **read-write mutex**. This exposes **two locking functions**: one to lock for reading and one to lock for writing.This distinction *allows multiple simultaneous readers while ensuring that writing is exclusive*. In Go, `sync.RWMutex` is such a lock. In addition to the `Lock`and `Unlock` methods of a `sync.Mutex`, it also exposes `RLock` and `RUnlock` methods; where `R` stands for `Read`. While read-write mutexes are commonly used, they place an additional burden on developers: we must now pay attention to not only when we’re accessing data, but also how.
+    - *Part of concurrent programming isn’t so much about serializing access across the narrowest possible piece of code*; it’s also about **coordinating multiple goroutines**. For example, sleeping for 10 milliseconds isn’t a particularly elegant solution. What if a goroutine takes more than 10 milliseconds? What if it takes less and we’re just wasting cycles? Also, what if instead of just waiting for goroutines to finish, we want to tell one "hey, I have new data for you to process!"?
+- Channels
+  - The challenge with concurrent programming stems from **sharing data**. If your goroutines share no data, you needn’t worry about synchronizing them.
+  - Channels help make concurrent programming saner by taking shared data out of the picture. **A channel is a communication pipe between goroutines which is used to pass data**. In other words, a goroutine that has data can pass it to another goroutine via a channel. The **result** is that, **at any point in time, only one goroutine has access to the data**.
+  - A channel, like everything else, has a type. This is the type of data that we’ll be passing through our channel. 
+  ```
+  c := make(chan int)
+  func worker(c chan int) { ... }
+  ```
+  - Receiving and sending data from and to a channel is **blocking**: *when we receive from a channel, execution of the goroutine won't continue until data is available*. Similarly, *when we send to a channel, execution won't continue until the data is received*. 
+  ```
+  CHANNEL <- DATA // sending to a channel
+  VAR := <-CHANNEL // receiving from a channel
+  ```
+  - **Channels provide all of the synchronization code** we need and also ensure that, at any given time, only one goroutine has access to a specific piece of data.
+- Buffered Channels
+  - In cases where you need high **guarantees that the data is being processed**, you probably will want to start blocking the client. In other cases, you might be willing to loosen those guarantees. There are a few popular **strategies to do this**. The first is to **buffer the data**. 
+    - *If no worker is available, we want to temporarily store the data in some sort of queue*. Channels have this buffering capability built-in.
+  - Buffered channels *don’t add more capacity*; they merely **provide a queue for pending work** and a good *way to deal with a sudden spike*.
+- Select
+  - Even with buffering, there comes a point where we need to start dropping messages. We can’t use up an infinite amount of memory hoping a worker frees up.
+  - Syntactically, select *looks a bit like a* `switch`. With it, we can provide code for when the channel isn’t available to send to.
+  - **A main purpose of select is to manage multiple channels**. Given multiple channels, `select` will block until the first one becomes available. If no channel is available, `default` is executed if one is provided. A channel is randomly picked when multiple are available.
+  - `select` works the same regardless of whether we’re receiving from, sending to, or any combination of channels:
+    - The first available channel is chosen.
+    - If multiple channels are available, one is randomly picked.
+    - If no channel is available, the `default` case is executed.
+    - If there’s no default, `select` **blocks**.
+- Timeout
+  - We’ve looked at **buffering messages** as well as simply **dropping them**. Another popular option is to **timeout**. We’re willing to **block for some time**, *but not forever*.
+  - To block for a maximum amount of time, we can use the `time.After` function. `time.After` returns a **channel**, so we can `select` from it.
 
 ### Examples
 - Example 1 Hello World
@@ -120,6 +166,8 @@ If you are also starting off, you may find these resources useful.
 - Example 14 Defer (Tidbits)
 - Example 15 Strings and Byte Arrays (Tidbits)
 - Example 16 Function Type (Tidbits)
+- Example 17 Concurrency
+- Example 18 Channels
 
 ### Questions
 - What are the ENV variables in ~/.profile ?
@@ -144,3 +192,7 @@ If you are also starting off, you may find these resources useful.
 - This is necessary because strings are **immutable**? Do not change? Example15
 - If you iterate over a string using `range`, you’ll get `runes`, not bytes (?)
 - Example 16 - Using functions like this can help decouple code from specific implementations much like we achieve with interfaces. - ??
+- Example 17c - how are two specifically goroutines writing to the same variable?
+- Is there a smart way to handle goroutines? e.g. sync.RWMutex Is it with TDD ? Because we add complexity in the code that we as humans cannot track/predict its behavior in all cases. (Channels?)
+- Example 18a,b - rand.Int() ? 
+- Example 18c - We’re pushing out 20 messages per second, but our workers can only handle 10 per second; thus, half the messagesget dropped. (??)
