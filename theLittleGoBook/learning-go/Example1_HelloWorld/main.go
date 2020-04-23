@@ -1,9 +1,9 @@
 // Example 1a
-package main
+// package main
 
-func main() {
-	println("It's over 9000!")
-}
+// func main() {
+// 	println("It's over 9000!")
+// }
 
 // ---------------------------------------
 // Example 1b
@@ -14,11 +14,11 @@ func main() {
 // Command: `./main`
 // Message: `It's over 9000!`
 
-// package heap
+package heap
 
-// func main() {
-// 	println("It's over 9000!")
-// }
+func main() {
+	println("It's over 9000!")
+}
 
 // ---------------------------------------
 // Example 1c

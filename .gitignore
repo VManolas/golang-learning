@@ -8,4 +8,7 @@
 *.sublime-*
 .idea
 .editorconfig
+
+# Repositories
 github.com/
+golang.org/

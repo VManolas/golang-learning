@@ -170,18 +170,25 @@ If you are also starting off, you may find these resources useful.
 - Example 18 Channels
 
 ### Questions
-- What are the ENV variables in ~/.profile ?
-- Why `Example1/main.go/Example 1b` prints the correct result when using `go build main.go`, `./main` commands ?
-  - Notice that the code compiles, there's just no entry point to run it. This is perfectly normal when you are, for example, building a library (?)
+- ~~What are the ENV variables in ~/.profile ?~~ 
+  - `env`
+- `man ssh`
+  - AWS free vm OR locally from one laptop to the other
+- ~~Why `Example1/main.go/Example 1b` prints the correct result when using `go build main.go`, `./main` commands ?~~
+  - ~~Notice that the code compiles, there's just no entry point to run it. This is perfectly normal when you are, for example, building a library (?)~~
 - Might have been upgraded but couldn't use `godoc -http=:6000` (localhost:6000)
 - How to check which editor I use as default in vscode?
-- In a terminal, I can type "vi(m)" to open Vi(m) editor. I can also type "bash" to open Bash editor. Which one is the default? 
-- Would it make sense to start using vim editor straight away?
-- What is composition and what is the "battle cry" about it over inheritance (OOP)?
+  - ~~vim VS bash~~ setup `vim` editor
+- ~~In a terminal, I can type "vi(m)" to open Vi(m) editor. I can also type "bash" to open Bash editor. Which one is the default?~~
+- ~~Would it make sense to start using vim editor straight away?~~
+- ~~What is composition and what is the "battle cry" about it over inheritance (OOP)?~~~ (check **Example7**)
+  - Look out for embedded structs
 - Functions on structures: 
   - func (s *Saiyan) Super() {	s.Power += 10000  } VS func Super(s *Saiyan) {  s.Power += 10000  } ?
 - What is the factory pattern (example 6)? And How it shields the rest of the code from worrying about allocation details?
-- See ?? in Example7/main.go
+  - Look up [Go Patterns](https://github.com/tmrts/go-patterns)
+  - How to use Interfaces
+- ~~See ?? in Example7/main.go~~
 - Example 9h - func extractPowers
 - Which tool do you use for package-management
 - Remember: the tight relationship between package names and your directory structure (not just within a project, but within the entire workspace). What is the difference between the workspace and the project?
