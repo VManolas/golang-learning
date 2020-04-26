@@ -17,4 +17,4 @@
 1. [Go/Playground](https://blog.golang.org/playground): Example1 Faking Time ?
 2. [Go/Playground](https://blog.golang.org/playground): Example2 Faking File system ?
 3. [Go/Playground](https://blog.golang.org/playground): Example3 Faking the Network ?
-4. 
+4. [Note: Time in the Go playground](https://tour.golang.org/flowcontrol/10) always appears to start at 2009-11-10 23:00:00 UTC, a value whose significance is left as an exercise for the reader ([Example_10](Examples/Example10_Switch/main.go)) ?
