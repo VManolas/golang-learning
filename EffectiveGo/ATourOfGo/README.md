@@ -9,8 +9,12 @@
 - Functions: TR [Go's declaration syntax article](https://blog.golang.org/declaration-syntax)
   - "Naked" return: A return statement without arguments returns the named return values of the function
 - Basic Types
-  - rune // alias for int32 - represents a Unicode code point ?
-  - uintptr ?
+  - `rune` // alias for int32 - represents a Unicode code point ?
+  - `uintptr` ?
+- TR [Defer, Panic, and Recover](https://blog.golang.org/defer-panic-and-recover)
+- Slice literas
+  -  A slice literal is like an array literal without the length ?
+  -  If I drop its first two values, can I re-gain them ?
 
 
 ### Other Questions
