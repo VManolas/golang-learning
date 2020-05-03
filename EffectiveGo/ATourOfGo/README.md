@@ -1,6 +1,6 @@
 ## [A Tour of Go](https://tour.golang.org/)
 
-### Notes
+### Notes & Questions
 - [Stateful vs. Stateless Architecture Overview](https://www.bizety.com/2018/08/21/stateful-vs-stateless-architecture-overview/)
     - [Defining statefull vs stateless web services](https://nordicapis.com/defining-stateful-vs-stateless-web-services/)
     - TL;DR,TR (*ToRead*) [Chapter 5 - Representational State Transfer (REST)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
@@ -15,7 +15,10 @@
 - Slice literas
   -  A slice literal is like an array literal without the length ?
   -  If I drop its first two values, can I re-gain them ?
-
+- Test cases: [package wc/func test](https://github.com/golang/tour/blob/master/wc/wc.go#L10) ?
+   -  [strings.Fields](https://golang.org/src/strings/strings.go?s=8396:8426#L319)
+- `Git`: `git add -u`, `git rebase --skip`, `git log -p`
+- `Vim` shortcuts: {`$`:EOL, `dd`:cut, `p`:paste, `x`:remove char, `Ctrl+L`:??
 
 ### Other Questions
 1. [Go/Playground](https://blog.golang.org/playground): Example1 Faking Time ?
