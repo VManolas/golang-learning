@@ -18,7 +18,7 @@
 - Test cases: [package wc/func test](https://github.com/golang/tour/blob/master/wc/wc.go#L10) ?
    -  [strings.Fields](https://golang.org/src/strings/strings.go?s=8396:8426#L319)
 - `Git`: `git add -u`, `git rebase --skip`, `git log -p`
-- `Vim` shortcuts: {`$`:EOL, `dd`:cut, `p`:paste, `x`:remove char, `Ctrl+L`:??
+- `Vim` shortcuts: {`$`:EOL, `dd`:cut, `p`:paste, `x`:remove char, `Ctrl+L`: clear bash screen
 
 ### Other Questions
 1. [Go/Playground](https://blog.golang.org/playground): Example1 Faking Time ?

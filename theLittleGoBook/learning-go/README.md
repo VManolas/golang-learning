@@ -188,6 +188,9 @@ If you are also starting off, you may find these resources useful.
 - What is the factory pattern (example 6)? And How it shields the rest of the code from worrying about allocation details?
   - Look up [Go Patterns](https://github.com/tmrts/go-patterns)
   - How to use Interfaces
+    - Example 12b: see `func implementInterface(e Exister) {...}`
+    - Example 12c: Empty Interface
+    - 
 - ~~See ?? in Example7/main.go~~
 - Example 9h - func extractPowers
 - Which tool do you use for package-management
