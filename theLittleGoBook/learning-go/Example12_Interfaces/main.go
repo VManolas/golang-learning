@@ -25,31 +25,31 @@
 
 // }
 // Example 12b- (from [Nestoras' multiple interface example](https://github.com/nestoras/go-playground/blob/master/general/05_interface_multiple/main.go))
-package main
+// package main
 
-import "fmt"
+// import "fmt"
 
-type Walker interface {
-	Walk()
-}
-type Sleeper interface {
-	Sleep()
-}
-type Person struct {
-	Name string
-}
+// type Walker interface {
+// 	Walk()
+// }
+// type Sleeper interface {
+// 	Sleep()
+// }
+// type Person struct {
+// 	Name string
+// }
 
-func (p Person) Walk() {
-	fmt.Println(p.Name + " is walking...")
-}
-func (p Person) Sleep() {
-	fmt.Println(p.Name + " is sleeping...")
-}
-func main() {
-	p := Person{Name: "Takis"}
-	p.Walk()
-	p.Sleep()
-}
+// func (p Person) Walk() {
+// 	fmt.Println(p.Name + " is walking...")
+// }
+// func (p Person) Sleep() {
+// 	fmt.Println(p.Name + " is sleeping...")
+// }
+// func main() {
+// 	p := Person{Name: "Takis"}
+// 	p.Walk()
+// 	p.Sleep()
+// }
 
 // Example 12b (from [Nestoras' type assertion interface example](https://github.com/nestoras/go-playground/blob/master/general/06_interface_type_assertion/main.go))
 // package main
@@ -446,3 +446,138 @@ func main() {
 // 	fmt.Println("areaP of rectangle is", areaP)
 // 	fmt.Println("perimeterP of rectangle is", perimeterP)
 // }
+
+// Example 12i from [How to use interfaces in go](https://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go)
+// package main
+
+// import "fmt"
+
+// //defining Animal datatypes
+// type Animal interface {
+// 	// defining an Animal as being anything that can speak
+// 	Speak() string
+// 	// we define an Animal as being any type that has a method named `Speak()`.
+// 	// Any type that defines this method is said to satisfy the Animal interface.
+// 	// There is no implements keyword in Go;
+// 	// whether or not a type satisfies an interface is determined automatically.
+// }
+
+// // This is a core concept in Go’s type system;
+// // instead of designing our abstractions in terms of what kind of data our types can hold,
+// // we design our abstractions in terms of what actions our types can execute.
+
+// // creating a couple of types that satisfy this interface:
+// type Dog struct{}
+
+// func (d Dog) Speak() string {
+// 	return "Woof!"
+// }
+
+// type Cat struct{}
+
+// func (c Cat) Speak() string {
+// 	return "Meow!"
+// }
+
+// type Kitty struct{}
+
+// // an interface definition does not prescribe whether an implementor should implement the interface using a pointer receiver or a value receiver.
+// func (k *Kitty) Speak() string {
+// 	return "Meow!"
+// }
+
+// type Llama struct{}
+
+// func (l Llama) Speak() string {
+// 	return "?????"
+// }
+
+// type JavaProgrammer struct{}
+
+// func (j JavaProgrammer) Speak() string {
+// 	return "Design patterns!"
+// }
+
+// func main() {
+// 	// we can create a slice of Animals, and put one of each type into that slice
+
+// 	// animals := []Animal{Dog{}, Cat{}, Llama{}, JavaProgrammer{}, Kitty{}} // cannot use Kitty literal (type Kitty) as type Animal in slice literal: Kitty does not implement Animal (Speak method has pointer receiver)
+// 	// What it’s saying is not that the interface Animal demands that you define your method as a pointer receiver,
+// 	// but that you have tried to convert a Cat struct into an Animal interface value,
+// 	// but only *Cat satisfies that interface.
+// 	// You can fix this bug by passing in a *Cat pointer to the Animal slice instead of a Cat value,
+// 	// by using new(Cat) instead of Cat{}
+// 	animals := []Animal{Dog{}, new(Cat), Llama{}, JavaProgrammer{}}
+// 	// (you could also say &Cat{}
+// 	// animals := []Animal{Dog{}, &Cat{}, Llama{}, JavaProgrammer{}}
+// 	// Also works passing in a *Dog pointer instead of a Dog value, without changing the definition of the Dog type’s Speak method
+// 	// but recognize a subtle difference:
+// 	// we didn’t need to change the type of the receiver of the Speak method.
+// 	// This works because a pointer type can access the methods of its associated value type, but not vice versa.
+// 	// That is, a *Dog value can utilize the Speak method defined on Dog, but as we saw earlier,
+// 	// a Cat value cannot access the Speak method defined on *Cat.
+// 	//animals := []Animal{new(Dog), new(Cat), Llama{}, JavaProgrammer{}}
+// 	// That may sound cryptic, but it makes sense when you remember the following: everything in Go is passed by value. Every time you call a function, the data you’re passing into it is copied.
+
+// 	// and see what each animal says
+// 	for _, animal := range animals {
+// 		fmt.Println(animal.Speak())
+// 	}
+
+// 	names := []string{"stanley", "david", "oscar"}
+// 	// we have to convert the []string to an []interface{}
+// 	// `cannot use names (type []string) as type []interface {} in function argument`
+// 	vals := make([]interface{}, len(names))
+// 	for i, v := range names {
+// 		vals[i] = v
+// 	}
+// 	PrintAll(vals)
+// }
+
+// // An interface value is constructed of two words of data;
+// // one word is used to point to a method table for the value’s underlying type,
+// // and the other word is used to point to the actual data being held by that value.
+// func PrintAll(vals []interface{}) {
+// 	for _, val := range vals {
+// 		fmt.Println(val)
+// 	}
+// }
+
+// Example 12j [getting a proper timestamp out of the Twitter API](https://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go)
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"reflect"
+	"time"
+)
+
+// start with a string representation of our JSON data
+var input = `
+{
+	"created_at": "Thu May 31 00:00:01 +0000 2012"
+}`
+
+func main() {
+	// our target will be of type map[string]interface{}, which is a
+	// pretty generic type that will give us a hashtable whose keys
+	// are strings, and whose values are of type interface{}
+	// var val map[string]interface{}
+
+	var val map[string]time.Time
+	//error:
+	// parsing time ""Thu May 31 00:00:01 +0000 2012"" as ""2006-01-02T15:04:05Z07:00"":
+	// cannot parse "Thu May 31 00:00:01 +0000 2012"" as "2006"
+	// what it means is that the string representation we gave it does not match the standard time formatting
+	// (because Twitter’s API was originally written in Ruby, and the default format for Ruby is not the same as the default format for Go).
+	// We’ll need to define our own type in order to unmarshal this value correctly.
+	if err := json.Unmarshal([]byte(input), &val); err != nil {
+		panic(err)
+	}
+
+	fmt.Println(val)
+	for k, v := range val {
+		fmt.Println(k, reflect.TypeOf(v))
+	}
+}

@@ -187,7 +187,7 @@ If you are also starting off, you may find these resources useful.
   - func (s *Saiyan) Super() {	s.Power += 10000  } VS func Super(s *Saiyan) {  s.Power += 10000  } ?
 - What is the factory pattern (example 6)? And How it shields the rest of the code from worrying about allocation details?
   - Look up [Go Patterns](https://github.com/tmrts/go-patterns)
-  - How to use Interfaces
+  - [How to use Interfaces](https://jordanorelli.com/post/32665860244/how-to-use-interfaces-in-go)
     - Example 12b: see `func implementInterface(e Exister) {...}`
     - Example 12c: Empty Interface
     - 

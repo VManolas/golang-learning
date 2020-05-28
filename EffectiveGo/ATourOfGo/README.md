@@ -13,8 +13,8 @@
   - `uintptr` ?
 - TR [Defer, Panic, and Recover](https://blog.golang.org/defer-panic-and-recover)
 - Slice literas
-  -  A slice literal is like an array literal without the length ?
-  -  If I drop its first two values, can I re-gain them ?
+  -  ~~A slice literal is like an array literal without the length ?~~
+  -  ~~If I drop its first two values, can I re-gain them ?~~
 - Test cases: [package wc/func test](https://github.com/golang/tour/blob/master/wc/wc.go#L10) ?
    -  [strings.Fields](https://golang.org/src/strings/strings.go?s=8396:8426#L319)
 - `Git`: `git add -u`, `git rebase --skip`, `git log -p`
