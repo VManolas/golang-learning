@@ -1,5 +1,28 @@
 ## [A Tour of Go](https://tour.golang.org/)
 
+### Examples
+- [Example 1 Faking Time](Examples/Example1_FakingTime/main.go)
+- [Example 2 Faking File System](Examples/Example2_FakingFileSystem/main.go)
+- [Example 3 Faking The Network](Examples/Example3_FakingTheNetwork/main.go)
+- [Example 4 Basic Type](Examples/Example4_BasicTypes/main.go)
+- [Example 5 Type Conversions](Examples/Example5_TypeConversions/main.go)
+- [Example 6 Numeric Constants](Examples/Example6_NumericConstants/main.go)
+- [Example 7 For](Examples/Example7_For/main.go)
+- [Example 8 If](Examples/Example8_If/main.go)
+- [Example 9 Exercise Loops 'n' Functions](Examples/Example9_ExerciseLoopsFunctions/main.go)
+- [Example 10 Switch](Examples/Example10_Switch/main.go)
+- [Example 11 Defer](Examples/Example11_Defer/main.go)
+- [Example 12 Pointers Struct Arrays](Examples/Example12_PointersStructArrays/main.go)
+- [Example 13 Slices](Examples/Example13_Slices/main.go)
+- [Example 14 Maps](Examples/Example14_Maps/main.go)
+- [Example 15 Function Values Closures](Examples/Example15_FunctionValuesClosures/main.go)
+- [Example 16 Exercise Closures](Examples/Example16_ExerciseClosures/main.go)
+- [Example 17 Methods](Examples/Example17_Methods/main.go)
+- [Example 18 Interfaces](Examples/Example18_Interfaces/main.go)
+- [Example 19 Type Assertions](Examples/Example19_TypeAssertions/main.go)
+- [Example 20 Stringers](Examples/Example20_Stringers/main.go)
+- [Example 21 Errors](Examples/Example21_Errors/main.go)
+
 ### Notes & Questions
 - [Stateful vs. Stateless Architecture Overview](https://www.bizety.com/2018/08/21/stateful-vs-stateless-architecture-overview/)
     - [Defining statefull vs stateless web services](https://nordicapis.com/defining-stateful-vs-stateless-web-services/)
