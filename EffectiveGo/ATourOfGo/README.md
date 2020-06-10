@@ -22,6 +22,8 @@
 - [Example 19 Type Assertions](Examples/Example19_TypeAssertions/main.go)
 - [Example 20 Stringers](Examples/Example20_Stringers/main.go)
 - [Example 21 Errors](Examples/Example21_Errors/main.go)
+- [Example 22 Readers](Examples/Example22_Readers/main.go)
+- [Example 23 Images](Examples/Example23_Images/main.go)
 
 ### Notes & Questions
 - [Stateful vs. Stateless Architecture Overview](https://www.bizety.com/2018/08/21/stateful-vs-stateless-architecture-overview/)
