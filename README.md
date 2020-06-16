@@ -2,3 +2,4 @@
 2. [Effective Go](./EffectiveGo/README.md)
 3. [Foundations of Programming](./FoundationsOfProgramming/README.md)
 4. [Codility Exercises](./Codility/README.md)
+5. [Roadmap Ideas](./RoadmapIdeas/README.md)

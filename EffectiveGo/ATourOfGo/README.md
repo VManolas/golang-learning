@@ -13,8 +13,9 @@
 - [Example 10 Switch](Examples/Example10_Switch/main.go)
 - [Example 11 Defer](Examples/Example11_Defer/main.go)
 - [Example 12 Pointers Struct Arrays](Examples/Example12_PointersStructArrays/main.go)
-- [Example 13 Slices](Examples/Example13_Slices/main.go)
-- [Example 14 Maps](Examples/Example14_Maps/main.go)
+- [Example 13 Slices](Examples/Example13_Slices/main.go) (see also [relevant post on slices on golang's blog](https://blog.golang.org/slices). For more slice tricks check [here](https://github.com/golang/go/wiki/SliceTricks))
+- [Example 14 Maps](Examples/Example14_Maps/main.go) (see also [relevant post on maps on golang's blog](https://blog.golang.org/maps)
+)
 - [Example 15 Function Values Closures](Examples/Example15_FunctionValuesClosures/main.go)
 - [Example 16 Exercise Closures](Examples/Example16_ExerciseClosures/main.go)
 - [Example 17 Methods](Examples/Example17_Methods/main.go)
@@ -34,7 +35,9 @@
 - Functions: TR [Go's declaration syntax article](https://blog.golang.org/declaration-syntax)
   - "Naked" return: A return statement without arguments returns the named return values of the function
 - Basic Types
-  - `rune` // alias for int32 - represents a Unicode code point ?
+  - [Strings, bytes, runes and characters in Go (from `The Go Blog`)](https://blog.golang.org/strings)
+    - `rune`: _alias for int32 - represents a Unicode code point_
+  - [The Absolute Minimum Every Software Developer Absolutely, Positively Must Know About Unicode and Character Sets](https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/)
   - `uintptr` ?
 - TR [Defer, Panic, and Recover](https://blog.golang.org/defer-panic-and-recover)
 - Slice literas
